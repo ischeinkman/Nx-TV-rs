@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export RUST_BACKTRACE=1
+echo "Starting new build."\
+ &&\
+ CARGO_INCREMENTAL=0\
+ RUST_TARGET_PATH="$PWD"\
+ xargo build --release --bin libnxbin --target=aarch64-none-elf --verbose\
+ &&\
+ echo "Compiled rust target. Now creating nro."\
+ &&\
+ elf2nro target/aarch64-none-elf/release/libnxbin.nx_elf libnxbin.nro\
+ &&\
+ echo "Finished making nro."
